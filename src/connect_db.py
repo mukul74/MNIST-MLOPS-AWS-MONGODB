@@ -1,7 +1,9 @@
+import logging
 import os
+
 import pymongo
 from fastapi import HTTPException
-import logging
+
 
 # 🔹 MongoDB Connection
 def get_db():
