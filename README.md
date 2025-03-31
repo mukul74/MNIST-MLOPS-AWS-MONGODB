@@ -76,9 +76,11 @@ Once the server is running, you can interact with the API:
 
 
 ## Steps to push on Github
- ### 1. git add @modified files
- ### 2. git commit -m "relevant msg"
- ### 3. git push -u origin main
+```bash
+    git add @modified files
+    git commit -m "relevant msg"
+    git push -u origin main
+```
 
 ## Author
 
