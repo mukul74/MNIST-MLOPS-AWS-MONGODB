@@ -52,19 +52,18 @@ Follow these steps to set up and run the project locally:
 Follow the steps to dockerize the app
 
 ### 1. Create docker-compose.yml, .dockerignore and Dockerfile
-
+    
 
 ### 2. Clean the previous images and containers
-'''bash
+```bash
     docker-compose down -v  # Removes all volumes and containers
     docker system prune -af  # Clears unused images and cache
-'''
+```
 
 ### 3. Docker Compose
-'''bash
+```bash
     docker-compose up --build
-'''
-
+```
 
 This will start the FastAPI server, which can be accessed at `http://127.0.0.1:8000`.
 
@@ -74,6 +73,12 @@ Once the server is running, you can interact with the API:
 
 - **Swagger UI:** `http://127.0.0.1:8000/docs`
 - **Redoc:** `http://127.0.0.1:8000/redoc`
+
+
+## Steps to push on Github
+ ### 1. git add @modified files
+ ### 2. git commit -m "relevant msg"
+ ### 3. git push -u origin main
 
 ## Author
 
