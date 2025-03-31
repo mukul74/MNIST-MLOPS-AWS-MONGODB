@@ -47,6 +47,25 @@ Follow these steps to set up and run the project locally:
   uvicorn src.main:app --reload
 ```
 
+## Dockerizing the app
+
+Follow the steps to dockerize the app
+
+### 1. Create docker-compose.yml, .dockerignore and Dockerfile
+
+
+### 2. Clean the previous images and containers
+'''bash
+    docker-compose down -v  # Removes all volumes and containers
+    docker system prune -af  # Clears unused images and cache
+'''
+
+### 3. Docker Compose
+'''bash
+    docker-compose up --build
+'''
+
+
 This will start the FastAPI server, which can be accessed at `http://127.0.0.1:8000`.
 
 ## API Endpoints
