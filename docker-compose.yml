@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mnist_mongodb
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_DATABASE: mnist_db
+    volumes:
+      - mongodb_data:/data/db
+
+  fastapi_app:
+    build: .
+    container_name: mnist_fastapi
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: "mongodb://mongodb:27017/"
+    volumes:
+      - .:/app
+
+volumes:
+  mongodb_data:
+
