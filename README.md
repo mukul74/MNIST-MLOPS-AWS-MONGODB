@@ -3,7 +3,7 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
-![MNIST](https://img.shields.io/badge/MNIST-Dataset-blue?style=for-the-badge)
+![MNIST](https://img.shields.io/badge/MNIST-blue?style=for-the-badge)
 
 
 # MNIST Classification with FastAPI
