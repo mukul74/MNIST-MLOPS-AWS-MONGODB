@@ -1,3 +1,4 @@
+import os
 import logging
 from typing import Dict, Tuple
 
@@ -50,7 +51,13 @@ def train_model() -> Dict[str, str]:
         model = RandomForestClassifier(
             n_estimators=100, random_state=42, n_jobs=-1, verbose=1
         )
+
         model.fit(X_train, y_train)
+        if not os.path.exists("src/models"):
+            os.makedirs("src/models")
+            logging.info(f"Folder created: {"src/models"}")
+        else:
+            logging.info(f"Folder already exists: {"src/models"}")
         joblib.dump(model, "src/models/model.pkl")
         logging.info("✅ Model training successful")
 

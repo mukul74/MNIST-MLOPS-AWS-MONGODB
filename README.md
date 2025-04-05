@@ -8,7 +8,7 @@
 
 # MNIST Classification with FastAPI
 
-A lightweight FastAPI-based service for loading, training, and predicting on the MNIST dataset.
+A lightweight FastAPI-based service for loading, training, and predicting on the MNIST dataset and an attempt to use End2End MLOPS.
 
 ## Features
 
