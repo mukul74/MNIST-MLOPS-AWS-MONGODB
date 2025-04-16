@@ -55,9 +55,9 @@ def train_model() -> Dict[str, str]:
         model.fit(X_train, y_train)
         if not os.path.exists("src/models"):
             os.makedirs("src/models")
-            logging.info(f"Folder created: {"src/models"}")
+            logging.info(f"Folder created: {'src/models'}")
         else:
-            logging.info(f"Folder already exists: {"src/models"}")
+            logging.info(f"Folder already exists: {'src/models'}")
         joblib.dump(model, "src/models/model.pkl")
         logging.info("✅ Model training successful")
 
