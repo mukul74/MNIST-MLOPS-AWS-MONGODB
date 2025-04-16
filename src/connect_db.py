@@ -1,6 +1,5 @@
 import logging
 import os
-
 import pymongo
 from fastapi import HTTPException
 
@@ -10,6 +9,8 @@ def get_db():
     """Create a MongoDB client with proper handling."""
     try:
         mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+        print(f"Mongo URI: {mongo_uri}")
+        logging.info("📥 Connecting to MongoDB...")
         client = pymongo.MongoClient(mongo_uri)
         db = client["mnist_db"]
         logging.info("Database connection succesfull")
