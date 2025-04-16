@@ -48,6 +48,17 @@ Follow these steps to set up and run the project locally:
   venv\Scripts\activate    # For Windows
   pip install -r requirements.txt
 ```
+### 3.1 Start MongoDB Server
+```bash
+sudo systemctl start mongod
+sudo systemctl start docker
+```
+
+### 3.2 Verify if these servers are active
+```bash
+systemctl status mongod
+systemctl status docker
+```
 
 ### 4. Run the FastAPI Application
 
