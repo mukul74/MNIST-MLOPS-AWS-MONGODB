@@ -75,7 +75,7 @@ Follow the steps to dockerize the app
 
 ### 2. Clean the previous images and containers
 ```bash
-    docker-compose down -v  # Removes all volumes and containers
+    docker compose down -v  # Removes all volumes and containers
     docker system prune -af  # Clears unused images and cache
 ```
 
@@ -93,8 +93,15 @@ Once the server is running, you can interact with the API:
 - **Swagger UI:** `http://127.0.0.1:8000/docs`
 - **Redoc:** `http://127.0.0.1:8000/redoc`
 
+## Steps to install pre-commit
 
+```bash
+# Project setup
+pip install pre-commit
+pre-commit install
+```
 ## Steps to push on Github
+
 ```bash
     git add @modified files
     git commit -m "relevant msg"
