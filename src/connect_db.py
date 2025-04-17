@@ -1,9 +1,10 @@
 import logging
 import os
-import pymongo
-from fastapi import HTTPException
-from dotenv import load_dotenv
 from pathlib import Path
+
+import pymongo
+from dotenv import load_dotenv
+from fastapi import HTTPException
 
 # Setup logging level
 logging.basicConfig(level=logging.INFO)
