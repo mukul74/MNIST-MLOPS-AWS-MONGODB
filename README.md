@@ -116,6 +116,12 @@ pre-commit install
 
 Contributions are welcome! Feel free to submit issues or pull requests to improve this project.
 
+## Upcoming
+1. Adding test cases
+2. Front End
+3. Tracking of ML models and Data
+
+
 ## License
 
 This project is open-source and available under the [MIT License](LICENSE).
