@@ -44,9 +44,11 @@ def predict_sample(n: int = 5):
         logging.info("✅ Prediction successful")
 
         return {
-            "message": "Prediction Done",
+            "status": "success",
+            "message": "Prediction succesfull",
             "actual": y_test.tolist(),
             "predicted": predictions.tolist(),
+            "code": 200,
         }
 
     except HTTPException as http_err:
