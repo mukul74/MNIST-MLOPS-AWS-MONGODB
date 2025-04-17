@@ -8,7 +8,7 @@ services:
     ports:
       - "27018:27017"
     environment:
-      MONGO_INITDB_DATABASE: mnist_db
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
     volumes:
       - mongodb_data:/data/db
 
@@ -21,10 +21,11 @@ services:
     depends_on:
       - mongodb
     environment:
-      MONGO_URI: "mongodb://mongodb:27017/"
+      MONGO_URI: ${MONGO_URI}  # This will be replaced by Docker
+      MONGO_DB_NAME: ${MONGO_DB_NAME}
+      RUNNING_IN_DOCKER: "true"  # Flag to indicate Docker environment
     volumes:
       - .:/app
 
 volumes:
   mongodb_data:
-
