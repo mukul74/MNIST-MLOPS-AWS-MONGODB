@@ -5,28 +5,32 @@ from fastapi import HTTPException
 from dotenv import load_dotenv
 from pathlib import Path
 
-# ✅ Load .env only if not running inside Docker
+# Setup logging level
+logging.basicConfig(level=logging.INFO)
+
+# ✅ Load environment variables if not in Docker
 if not os.getenv("RUNNING_IN_DOCKER"):
-    # Load .env from the parent directory
+    print("🧪 Running locally. Loading .env...")
     env_path = Path(__file__).resolve().parent.parent / ".env"
     load_dotenv(dotenv_path=env_path)
-
-# Optional debug logs (consider removing them in production)
-logging.debug(f"DEBUG: Loaded MONGO_URI = {os.getenv('MONGO_URI')}")
-logging.debug(f"DEBUG: Loaded MONGO_DB_NAME = {os.getenv('MONGO_DB_NAME')}")
+else:
+    print("🐳 Running in Docker. Skipping .env load.")
 
 # 🔹 MongoDB Connection
 def get_db():
     """Create a MongoDB client with proper handling."""
     try:
-        # Use the environment variable MONGO_URI, fall back to localhost if not set
         mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
         mongo_db_name = os.getenv("MONGO_DB_NAME", "mnist_db")
-        logging.info(f"Mongo URI: {mongo_uri}")
 
+        logging.info(f"Mongo URI: {mongo_uri}")
         logging.info("📥 Connecting to MongoDB...")
-        client = pymongo.MongoClient(mongo_uri)
+        
+        client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
         db = client[mongo_db_name]
+
+        # Trigger a call to check the connection
+        client.server_info()
 
         logging.info("✅ Database connection successful")
         return db

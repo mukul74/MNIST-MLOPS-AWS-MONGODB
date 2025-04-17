@@ -60,3 +60,12 @@ def predict(n: int = 5):
     except Exception as e:
         logging.error(f"❌ Prediction failed: {e}")
         raise HTTPException(status_code=500, detail="Prediction failed")
+
+@app.get("/debug-env")
+def debug_env():
+    import os
+    return {
+        "RUNNING_IN_DOCKER": os.getenv("RUNNING_IN_DOCKER"),
+        "MONGO_URI": os.getenv("MONGO_URI"),
+        "MONGO_DB_NAME": os.getenv("MONGO_DB_NAME")
+    }
