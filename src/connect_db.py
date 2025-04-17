@@ -16,6 +16,7 @@ if not os.getenv("RUNNING_IN_DOCKER"):
 else:
     print("🐳 Running in Docker. Skipping .env load.")
 
+
 # 🔹 MongoDB Connection
 def get_db():
     """Create a MongoDB client with proper handling."""
@@ -25,7 +26,7 @@ def get_db():
 
         logging.info(f"Mongo URI: {mongo_uri}")
         logging.info("📥 Connecting to MongoDB...")
-        
+
         client = pymongo.MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
         db = client[mongo_db_name]
 
