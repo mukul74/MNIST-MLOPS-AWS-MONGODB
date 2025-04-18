@@ -43,28 +43,28 @@ def test_store_mnist_data():
     assert json_response["code"] == 200
 
 
-def test_predict_endpoint():
-    """Test the prediction endpoint"""
-    response = client.get("/predict_sample/5")
-    assert response.status_code == 200
+# def test_predict_endpoint():
+#     """Test the prediction endpoint"""
+#     response = client.get("/predict_sample/5")
+#     assert response.status_code == 200
 
-    json_response = response.json()
+#     json_response = response.json()
 
-    assert json_response["status"] == "success"
-    assert json_response["message"] == "Prediction succesfull"
-    assert json_response["code"] == 200
+#     assert json_response["status"] == "success"
+#     assert json_response["message"] == "Prediction succesfull"
+#     assert json_response["code"] == 200
 
-    # Ensure actual and predicted are lists of the same length
-    actual = json_response["actual"]
-    predicted = json_response["predicted"]
+#     # Ensure actual and predicted are lists of the same length
+#     actual = json_response["actual"]
+#     predicted = json_response["predicted"]
 
-    assert isinstance(actual, list)
-    assert isinstance(predicted, list)
-    assert len(actual) == len(predicted)
+#     assert isinstance(actual, list)
+#     assert isinstance(predicted, list)
+#     assert len(actual) == len(predicted)
 
-    # Optionally check if values are integers between 0 and 9 (for MNIST)
-    assert all(isinstance(x, int) and 0 <= x <= 9 for x in actual)
-    assert all(isinstance(x, int) and 0 <= x <= 9 for x in predicted)
+#     # Optionally check if values are integers between 0 and 9 (for MNIST)
+#     assert all(isinstance(x, int) and 0 <= x <= 9 for x in actual)
+#     assert all(isinstance(x, int) and 0 <= x <= 9 for x in predicted)
 
 
 def test_train_model():

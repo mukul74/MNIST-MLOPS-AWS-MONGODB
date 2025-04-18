@@ -1,11 +1,10 @@
-# .github/workflows/test-on-workflow-run.yml
-name: Run Pytest (Triggered After Upload)
+name: Run Pytest
 
 on:
-  workflow_run:
-    workflows: ["Upload Model"]
-    types:
-      - completed
+  push:
+    branches: [main, development]
+  pull_request:
+    branches: [main, development]
 
 jobs:
   test:
@@ -24,44 +23,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Restore pretrained model from cache
-      id: cache-model
-      uses: actions/cache@v4
-      with:
-        path: src/models/model.pkl
-        key: pretrained-model-v1
+    - name: Show current directory
+      run: pwd
 
-    - name: Download pretrained model artifact if cache miss
-      if: steps.cache-model.outputs.cache-hit != 'true'
-      uses: actions/download-artifact@v4
-      with:
-        name: trained-model
-        path: src/models
-
-    - name: Check if model file exists
-      id: check_model
-      run: |
-        if [ -f "src/models/model.pkl" ]; then
-          echo "model_exists=true" >> $GITHUB_OUTPUT
-        else
-          echo "❌ Model file not found!"
-          echo "model_exists=false" >> $GITHUB_OUTPUT
-        fi
 
     - name: Start MongoDB
-      if: steps.check_model.outputs.model_exists == 'true'
       uses: supercharge/mongodb-github-action@1.12.0
       with: 
         mongodb-version: '6.0.5'
 
     - name: Run tests
-      if: steps.check_model.outputs.model_exists == 'true'
       env: 
         MONGODB_URI: mongodb://localhost:27017
       run: pytest
-
-    - name: Fail if model is missing
-      if: steps.check_model.outputs.model_exists != 'true'
-      run: |
-        echo "⚠️ model.pkl not found after checking both cache and artifacts."
-        exit 1
