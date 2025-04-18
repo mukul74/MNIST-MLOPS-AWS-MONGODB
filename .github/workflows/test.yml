@@ -23,6 +23,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Cache trained model
+      id: cache-model
+      uses: actions/cache@v4
+      with:
+        path: src/model/model.pkl
+        key: ${{ runner.os }}-model-${{ hashFiles('src/model/model.pkl') }}
+
+    - name: Upload trained model
+      uses: actions/upload-artifact@v4
+      with:
+        name: trained-model
+        path: src/models/model.pkl
+
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.12.0
       with: 
