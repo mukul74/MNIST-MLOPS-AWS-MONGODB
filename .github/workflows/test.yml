@@ -1,4 +1,5 @@
-name: Run Pytest
+# .github/workflows/test-on-workflow-run.yml
+name: Run Pytest (Triggered After Upload)
 
 on:
   workflow_run:

@@ -1,10 +1,8 @@
-# .github/workflows/upload-model.yml
 name: Upload Model
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, development]
 
 jobs:
   upload-model:
@@ -16,5 +14,7 @@ jobs:
       - name: Upload model.pkl artifact
         uses: actions/upload-artifact@v4
         with:
-          name: model-pkl
+          name: trained-model
           path: src/models/model.pkl
+          retention-days: 7
+
