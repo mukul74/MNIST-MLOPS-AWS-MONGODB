@@ -1,26 +1,20 @@
-name: Upload Pretrained Model
-
+# .github/workflows/upload-model.yml
+name: Upload Model
 
 on:
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  push:
+    branches:
+      - main
 
-  
 jobs:
   upload-model:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Check if model exists
-      run: |
-        if [ ! -f src/models/model.pkl ]; then
-          echo "❌ model.pkl not found!"
-          exit 1
-        fi
-
-    - name: Upload model as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: trained-model
-        path: src/models/model.pkl
+      - name: Upload model.pkl artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-pkl
+          path: src/models/model.pkl
