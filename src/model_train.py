@@ -69,3 +69,6 @@ def train_model() -> Dict[str, str]:
     except Exception as e:
         logging.error(f"Model training failed: {e}")
         raise HTTPException(status_code=500, detail="Model training unsuccessful")
+
+
+# Trying something new
