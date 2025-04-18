@@ -3,8 +3,12 @@ name: Run Pytest
 on:
   push:
     branches: [main, development]
+    paths:
+      - '**/*.py'  # Trigger only when Python files are changed
   pull_request:
     branches: [main, development]
+    paths:
+      - '**/*.py'  # Trigger only when Python files are changed
 
 jobs:
   test:
