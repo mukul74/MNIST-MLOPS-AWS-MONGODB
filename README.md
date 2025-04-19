@@ -1,6 +1,3 @@
-Here's a **beautified and rich version** of your README with improved formatting, emoji flair, consistent structure, clickable badges, and better visual hierarchy while keeping everything relevant:
-
----
 
 <p align="center">
   <img src="images/UI.png" alt="App UI" width="600"/>
