@@ -196,7 +196,3 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
-
----
-
-Let me know if you'd like a version with collapsible sections or if you want a Markdown file generated directly!
