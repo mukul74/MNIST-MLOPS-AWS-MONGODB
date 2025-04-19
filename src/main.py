@@ -1,8 +1,11 @@
+import io
 import logging
 
-from fastapi import FastAPI, HTTPException
+import numpy as np
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from PIL import Image
 
-from src.model_predict import predict_sample
+from src.model_predict import predict_digit, predict_sample
 from src.model_train import train_model
 from src.store_minst import store_mnist_model
 
@@ -60,6 +63,21 @@ def predict(n: int = 5):
     except Exception as e:
         logging.error(f"❌ Prediction failed: {e}")
         raise HTTPException(status_code=500, detail="Prediction failed")
+
+
+@app.post("/predict_image", summary="Predict MNIST Image")
+async def predict_image(file: UploadFile = File(...)):
+    contents = await file.read()
+    image = Image.open(io.BytesIO(contents))
+    arr = np.array(image).astype("float32") / 255.0
+    response = predict_digit(arr)
+    # print("Predcited_Response : ", int(response["predicted_digit"]))
+    return {
+        "status": "success",
+        "message": "Prediction successful",
+        "predicted_digit": int(response["predicted_digit"]),
+        "code": 200,
+    }
 
 
 @app.get("/debug-env")
