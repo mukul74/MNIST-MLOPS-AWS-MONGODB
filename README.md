@@ -50,14 +50,14 @@ Follow these steps to set up and run the project locally:
 ```
 ### 3.1 Start MongoDB Server
 ```bash
-sudo systemctl start mongod
-sudo systemctl start docker
+  sudo systemctl start mongod
+  sudo systemctl start docker
 ```
 
 ### 3.2 Verify if these servers are active
 ```bash
-systemctl status mongod
-systemctl status docker
+  systemctl status mongod
+  systemctl status docker
 ```
 
 ### 4. Run the FastAPI Application
@@ -66,7 +66,45 @@ systemctl status docker
   uvicorn src.main:app --reload
 ```
 
-## Dockerizing the app
+### 5. Run the Streamlit Application
+
+```bash
+  streamlit run app.py
+```
+
+
+
+### Frontend should look like this
+<img src="images/UI.png" alt="Diagram" width="600"/>
+<!-- ![Alt text](images/UI.png) -->
+
+
+## How to RUN
+
+### 1. To get the MNIST dataset in MongoDB
+
+```bash
+  curl -X 'POST' \
+  'http://127.0.0.1:8001/store_mnist' \
+  -H 'accept: application/json' \
+  -d ''
+```
+
+
+### 2. To train the model in MongoDB
+
+```bash
+   curl -X 'POST'  \
+   'http://127.0.0.1:8001/train'\   
+   -H 'accept: application/json' \ 
+   -d ''
+```
+### 3. Tp predict on the hand drwan image
+```bash
+http://localhost:8501
+```
+
+## Dockerizing the app(In Progress)
 
 Follow the steps to dockerize the app
 
