@@ -8,3 +8,10 @@ env/
 venv/
 nvenv/
 *.txt
+mlruns/
+*.log
+*.csv
+*.json
+*.db
+*.sqlite
+*.db-journal

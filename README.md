@@ -190,6 +190,7 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 - ✅ Unit & integration tests using `pytest`
 - 🎨 Streamlit UI improvements
 - 📊 ML model tracking and data versioning
+  - MLFLOW added
 
 ---
 
