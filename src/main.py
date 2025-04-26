@@ -1,6 +1,7 @@
 import io
 import logging
 
+import mlflow
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image
@@ -43,9 +44,10 @@ def home():
 def train():
     """Endpoint to train the MNIST model."""
     try:
-        logging.info("🚀 Training model...")
-        response = train_model()
-        logging.info("✅ Model trained successfully")
+        with mlflow.start_run():
+            logging.info("🚀 Training model...")
+            response = train_model()
+            logging.info("✅ Model trained successfully")
         return response
     except Exception as e:
         logging.error(f"❌ Training failed: {e}")
