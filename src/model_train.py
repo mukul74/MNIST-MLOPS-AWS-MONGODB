@@ -8,6 +8,7 @@ import mlflow
 import numpy as np
 import optuna
 from fastapi import HTTPException
+from scipy.ndimage import rotate, shift, zoom
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
@@ -57,11 +58,51 @@ def load_data(db) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         raise HTTPException(status_code=500, detail="Data fetching unsuccessful")
 
 
+def augment_data(X, y):
+    """Apply random shifts, rotations, scaling, and noise to the dataset."""
+    X_augmented = []
+    y_augmented = []
+
+    for img, label in zip(X, y):
+        img = img.reshape(28, 28)  # Assuming images are flattened 28x28
+
+        # Random shift
+        shift_x = np.random.uniform(-2, 2)
+        shift_y = np.random.uniform(-2, 2)
+        shifted = shift(img, shift=(shift_x, shift_y), mode="constant", cval=0)
+
+        # Random rotation
+        angle = np.random.uniform(-15, 15)
+        rotated = rotate(shifted, angle=angle, reshape=False, mode="constant", cval=0)
+
+        # Random scaling (zoom in/out)
+        scale = np.random.uniform(0.9, 1.1)
+        zoomed = zoom(rotated, zoom=scale)
+        if zoomed.shape[0] > 28:
+            zoomed = zoomed[:28, :28]
+        else:
+            pad_width = ((0, 28 - zoomed.shape[0]), (0, 28 - zoomed.shape[1]))
+            zoomed = np.pad(zoomed, pad_width, mode="constant", constant_values=0)
+
+        # Add small random noise
+        noise = np.random.normal(0, 0.02, (28, 28))
+        noised = zoomed + noise
+        noised = np.clip(noised, 0, 1)
+
+        X_augmented.append(noised.flatten())
+        y_augmented.append(label)
+
+    return np.array(X_augmented), np.array(y_augmented)
+
+
 def objective(trial, X_train, y_train, X_test, y_test):
     """Objective function for Optuna hyperparameter tuning with MLflow logging."""
     n_estimators = trial.suggest_int("n_estimators", 50, 200)
     max_depth = trial.suggest_int("max_depth", 2, 20)
     min_samples_split = trial.suggest_int("min_samples_split", 2, 20)
+
+    # Augment training data
+    X_train_aug, y_train_aug = augment_data(X_train, y_train)
 
     model = RandomForestClassifier(
         n_estimators=n_estimators,
@@ -72,9 +113,9 @@ def objective(trial, X_train, y_train, X_test, y_test):
         verbose=0,
     )
 
-    model.fit(X_train, y_train)
-    train_accuracy = accuracy_score(y_train, model.predict(X_train))
-    test_accuracy = accuracy_score(y_test, model.predict(X_test))
+    model.fit(X_train_aug, y_train_aug)
+    train_accuracy = accuracy_score(y_train_aug, model.predict(X_train_aug))
+    test_accuracy = accuracy_score(y_test, model.predict(X_test))  # Test on clean data!
 
     with mlflow.start_run(nested=True):
         mlflow.log_params(
@@ -84,8 +125,8 @@ def objective(trial, X_train, y_train, X_test, y_test):
                 "min_samples_split": min_samples_split,
             }
         )
-        mlflow.log_metric("test_accuracy", test_accuracy)
         mlflow.log_metric("train_accuracy", train_accuracy)
+        mlflow.log_metric("test_accuracy", test_accuracy)
 
     return test_accuracy
 
@@ -127,9 +168,8 @@ def train_model() -> Dict[str, str]:
             test_accuracy = accuracy_score(y_test, model.predict(X_test))
 
             mlflow.log_params(best_params)
-            mlflow.log_metrics(
-                {"train_accuracy ": train_accuracy, "test_accuracy ": test_accuracy}
-            )
+            mlflow.log_metric("train_accuracy", train_accuracy)
+            mlflow.log_metric("test_accuracy", test_accuracy)
             # mlflow.sklearn.log_model(model, artifact_path="model")
             # mlflow.log_artifact("src/models/model.pkl", artifact_path="model")
             logging.info(f"Best Train Accuracy: {train_accuracy}")

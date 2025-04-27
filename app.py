@@ -59,7 +59,7 @@ if predict:
 
         try:
             response = requests.post(
-                "http://localhost:8001/predict_image",
+                "http://localhost:8000/predict_image",
                 files={"file": ("image.png", img_bytes, "image/png")},
             )
             if response.ok:
@@ -73,4 +73,4 @@ if predict:
         st.warning("Please draw something before predicting.")
 
 if clear:
-    st.experimental_rerun()
+    st.rerun()

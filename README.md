@@ -113,12 +113,15 @@ curl -X 'POST' \
   'http://127.0.0.1:8001/train' \
   -H 'accept: application/json' \
   -d ''
+
+mlflow ui
 ```
 
 ### 3. Predict on Hand-drawn Image
 
+```bash
 Visit: [http://localhost:8501](http://localhost:8501)
-
+```
 ---
 
 ## 🐳 Dockerizing the App *(In Progress)*
